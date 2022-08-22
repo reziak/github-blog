@@ -9,22 +9,25 @@ import { NotFound } from './pages/NotFound'
 import { Post } from './pages/Post'
 
 import { GlobalStyle } from './styling/global'
+import { GithubProvider } from './contexts/GithubContext'
 
 export const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<DefaultLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="posts">
-              <Route path=":id" element={<Post />} />
+      <GithubProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<DefaultLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="posts">
+                <Route path=":id" element={<Post />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
             </Route>
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </GithubProvider>
     </ThemeProvider>
   )
 }

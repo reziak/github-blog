@@ -1,0 +1,64 @@
+import styled from 'styled-components'
+
+export const PostHeaderContainer = styled.header`
+  width: 100%;
+  max-width: 54rem;
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.colors.profile};
+  box-shadow: 0px 2px 28px rgba(0, 0, 0, 0.2);
+  padding: 2rem 2.5rem;
+  margin: -84px auto 0;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    font-size: 1.5rem;
+    color: ${(props) => props.theme.colors.title};
+    margin-bottom: 0.5rem;
+  }
+`
+
+export const PostHeaderLinks = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: ${(props) => props.theme.colors.base};
+    font-size: 0.75rem;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      border-color: ${(props) => props.theme.colors.base};
+    }
+  }
+`
+
+export const PostHeaderInfos = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    span {
+      color: ${(props) => props.theme.colors.subtitle};
+    }
+
+    svg {
+      color: ${(props) => props.theme.colors.label};
+      font-size: 1.125rem;
+    }
+  }
+`
