@@ -2,8 +2,14 @@ import { formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { Remark } from 'react-remark'
+
 import { GithubContext, PostType } from '../../contexts/GithubContext'
+
 import { PostHeader } from './components/PostHeader'
+
+import { PostBodyContainer } from './styles'
+import { CodeSnippets } from './components/CodeSnippets'
 
 type FormattedPostType = PostType & {
   formattedDate: string
@@ -50,9 +56,19 @@ export const Post = () => {
         comments={post?.comments!}
         linkToGH={post?.htmlUrl!}
       />
-      <article>
-        <h1>Post</h1>
-      </article>
+      <PostBodyContainer>
+        <Remark
+          rehypeReactOptions={{
+            components: {
+              pre: ({ children }: any) => (
+                <CodeSnippets content={children[0]} />
+              ),
+            },
+          }}
+        >
+          {post?.body!}
+        </Remark>
+      </PostBodyContainer>
     </>
   )
 }

@@ -32,6 +32,7 @@ type GithubContextType = {
   ownerProfile: OwnerProfile
   posts: PostType[]
   numberOfPosts: number
+  fetchPosts: (query?: string) => Promise<void>
   fetchSinglePost: (id: number) => Promise<PostType>
 }
 
@@ -63,12 +64,19 @@ export const GithubProvider = ({ children }: GithubProviderProps) => {
     setOwnerProfile(owner)
   }, [])
 
-  const fetchPosts = useCallback(async () => {
-    const response = await api.get('repos/reziak/github-blog/issues')
+  const fetchPosts = useCallback(async (query?: string) => {
+    const uri = query
+      ? `search/issues?q=${encodeURI(query)}%20repo:reziak/github-blog`
+      : 'repos/reziak/github-blog/issues'
+
+    const response = await api.get(uri)
 
     // https://api.github.com/search/issues?q=${query}%20repo:reziak/github-blog
 
-    const issues = response.data.map((issue: Record<string, any>) => {
+    const result =
+      'items' in response.data ? response.data.items : response.data
+
+    const issues = result.map((issue: Record<string, any>) => {
       return {
         id: issue.number,
         title: issue.title,
@@ -111,7 +119,13 @@ export const GithubProvider = ({ children }: GithubProviderProps) => {
 
   return (
     <GithubContext.Provider
-      value={{ ownerProfile, posts, numberOfPosts, fetchSinglePost }}
+      value={{
+        ownerProfile,
+        posts,
+        numberOfPosts,
+        fetchPosts,
+        fetchSinglePost,
+      }}
     >
       {children}
     </GithubContext.Provider>

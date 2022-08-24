@@ -12,5 +12,9 @@ export const defaultTheme = {
     profile: '#0b1b2b',
     background: '#071422',
     input: '#040f1a',
+
+    'pre-symbol': '#80ABD6',
+    'pre-keyword': '#ff79bd',
+    'pre-vars': '#4efa7b',
   },
 } as const
